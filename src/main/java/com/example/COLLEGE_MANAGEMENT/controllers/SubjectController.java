@@ -17,31 +17,31 @@ public class SubjectController {
         this.subjectService = subjectService;
     }
 
-    // ✅ Create Subject
+    //  Create Subject
     @PostMapping
     public SubjectDTO createSubject(@Valid @RequestBody SubjectDTO subjectDTO) {
         return subjectService.createSubject(subjectDTO);
     }
 
-    // ✅ Get Subject by ID
+    //  Get Subject by ID
     @GetMapping("/{id}")
     public SubjectDTO getSubjectById(@PathVariable Long id) {
         return subjectService.getSubjectById(id);
     }
 
-    // ✅ Get All Subjects
+    //  Get All Subjects
     @GetMapping
     public List<SubjectDTO> getAllSubjects() {
         return subjectService.getAllSubjects();
     }
 
-    // ✅ Delete Subject
+    //  Delete Subject
     @DeleteMapping("/{id}")
     public void deleteSubject(@PathVariable Long id) {
         subjectService.deleteSubject(id);
     }
 
-    // ✅ Assign Professor (Many-to-One)
+    //  Assign Professor (Many-to-One)
     @PutMapping("/{id}/professor")
     public SubjectDTO assignProfessor(
             @PathVariable Long id,
@@ -50,7 +50,7 @@ public class SubjectController {
         return subjectService.assignProfessor(id, professorId);
     }
 
-    // ✅ Assign Students (Many-to-Many)
+    //  Assign Students (Many-to-Many)
     @PutMapping("/{id}/students")
     public SubjectDTO assignStudents(
             @PathVariable Long id,

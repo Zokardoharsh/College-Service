@@ -17,31 +17,31 @@ public class ProfessorController {
         this.professorService = professorService;
     }
 
-    // ✅ Create Professor
+    //  Create Professor
     @PostMapping
     public ProfessorDTO createProfessor(@Valid @RequestBody ProfessorDTO professorDTO) {
         return professorService.createProfessor(professorDTO);
     }
 
-    // ✅ Get by ID
+    //  Get by ID
     @GetMapping("/{id}")
     public ProfessorDTO getProfessorById(@PathVariable Long id) {
         return professorService.getProfessorById(id);
     }
 
-    // ✅ Get All
+    //  Get All
     @GetMapping
     public List<ProfessorDTO> getAllProfessors() {
         return professorService.getAllProfessors();
     }
 
-    // ✅ Delete
+    //  Delete
     @DeleteMapping("/{id}")
     public void deleteProfessor(@PathVariable Long id) {
         professorService.deleteProfessor(id);
     }
 
-    // ✅ Assign Subjects (One-to-Many)
+    //  Assign Subjects (One-to-Many)
     @PutMapping("/{id}/subjects")
     public ProfessorDTO assignSubjects(
             @PathVariable Long id,
@@ -50,7 +50,7 @@ public class ProfessorController {
         return professorService.assignSubjects(id, subjectIds);
     }
 
-    // ✅ Assign Students (Many-to-Many)
+    //  Assign Students (Many-to-Many)
     @PutMapping("/{id}/students")
     public ProfessorDTO assignStudents(
             @PathVariable Long id,

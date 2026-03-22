@@ -17,31 +17,31 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    // ✅ Create Student
+    //  Create Student
     @PostMapping
     public StudentDTO createStudent(@Valid @RequestBody StudentDTO studentDTO) {
         return studentService.createStudent(studentDTO);
     }
 
-    // ✅ Get Student by ID
+    //  Get Student by ID
     @GetMapping("/{id}")
     public StudentDTO getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id);
     }
 
-    // ✅ Get All Students
+    //  Get All Students
     @GetMapping
     public List<StudentDTO> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    // ✅ Delete Student
+    //  Delete Student
     @DeleteMapping("/{id}")
     public void deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
     }
 
-    // ✅ Assign Subjects
+    //  Assign Subjects
     @PutMapping("/{id}/subjects")
     public StudentDTO assignSubjects(
             @PathVariable Long id,
@@ -50,7 +50,7 @@ public class StudentController {
         return studentService.assignSubjects(id, subjectIds);
     }
 
-    // ✅ Assign Professors
+    //  Assign Professors
     @PutMapping("/{id}/professors")
     public StudentDTO assignProfessors(
             @PathVariable Long id,

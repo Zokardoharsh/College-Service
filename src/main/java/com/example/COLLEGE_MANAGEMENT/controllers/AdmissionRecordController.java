@@ -17,31 +17,31 @@ public class AdmissionRecordController {
         this.admissionRecordService = admissionRecordService;
     }
 
-    // ✅ Create Admission Record
+    //  Create Admission Record
     @PostMapping
     public AdmissionRecordDTO createAdmissionRecord(@Valid @RequestBody AdmissionRecordDTO dto) {
         return admissionRecordService.createAdmissionRecord(dto);
     }
 
-    // ✅ Get by ID
+    //  Get by ID
     @GetMapping("/{id}")
     public AdmissionRecordDTO getAdmissionRecordById(@PathVariable Long id) {
         return admissionRecordService.getAdmissionRecordById(id);
     }
 
-    // ✅ Get All
+    //  Get All
     @GetMapping
     public List<AdmissionRecordDTO> getAllAdmissionRecords() {
         return admissionRecordService.getAllAdmissionRecords();
     }
 
-    // ✅ Delete
+    //  Delete
     @DeleteMapping("/{id}")
     public void deleteAdmissionRecord(@PathVariable Long id) {
         admissionRecordService.deleteAdmissionRecord(id);
     }
 
-    // ✅ Assign Student (One-to-One)
+    //  Assign Student (One-to-One)
     @PutMapping("/{id}/student")
     public AdmissionRecordDTO assignStudent(
             @PathVariable Long id,
