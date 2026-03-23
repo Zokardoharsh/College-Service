@@ -1,5 +1,6 @@
 package com.example.COLLEGE_MANAGEMENT.services;
 
+import com.example.COLLEGE_MANAGEMENT.configs.DepartmentClient;
 import com.example.COLLEGE_MANAGEMENT.dto.StudentDTO;
 import com.example.COLLEGE_MANAGEMENT.entities.ProfessorEntity;
 import com.example.COLLEGE_MANAGEMENT.entities.StudentEntity;
@@ -8,6 +9,7 @@ import com.example.COLLEGE_MANAGEMENT.exceptions.ResourceNotFoundException;
 import com.example.COLLEGE_MANAGEMENT.repositories.ProfessorRepository;
 import com.example.COLLEGE_MANAGEMENT.repositories.StudentRepository;
 import com.example.COLLEGE_MANAGEMENT.repositories.SubjectRepository;
+import com.example.COLLEGE_MANAGEMENT.util.DepartmentResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -21,26 +23,64 @@ public class StudentServiceImpl implements StudentService {
     private final SubjectRepository subjectRepository;
     private final ProfessorRepository professorRepository;
     private final ModelMapper modelMapper;
+    private final DepartmentClient departmentClient;
 
     public StudentServiceImpl(StudentRepository studentRepository,
                               SubjectRepository subjectRepository,
                               ProfessorRepository professorRepository,
-                              ModelMapper modelMapper) {
+                              ModelMapper modelMapper,
+                              DepartmentClient departmentClient)  {
         this.studentRepository = studentRepository;
         this.subjectRepository = subjectRepository;
         this.professorRepository = professorRepository;
         this.modelMapper = modelMapper;
+        this.departmentClient = departmentClient;
     }
 
-    // ✅ Create Student
+    //  Create Student
+//    @Override
+//    public StudentDTO createStudent(StudentDTO dto) {
+//        if (dto.getDepartmentId() != null) {
+//            DepartmentResponse response =
+//                    departmentClient.getDepartmentById(dto.getDepartmentId());
+//
+//            if (response == null || response.getData() == null) {
+//                throw new ResourceNotFoundException("Department not found");
+//            }
+//        }
+//        StudentEntity student = modelMapper.map(dto, StudentEntity.class);
+//        StudentEntity saved = studentRepository.save(student);
+//        return convertToDTO(saved);
+//    }
+
     @Override
     public StudentDTO createStudent(StudentDTO dto) {
-        StudentEntity student = modelMapper.map(dto, StudentEntity.class);
+
+        StudentEntity student = new StudentEntity();
+
+        // manual mapping
+        student.setName(dto.getName());
+        student.setDepartmentId(dto.getDepartmentId());
+
+        // 🔥 validate department
+        if (dto.getDepartmentId() != null) {
+            DepartmentResponse response =
+                    departmentClient.getDepartmentById(dto.getDepartmentId());
+
+            if (response == null || response.getData() == null) {
+                throw new ResourceNotFoundException("Department not found");
+            }
+        }
+
         StudentEntity saved = studentRepository.save(student);
+
         return convertToDTO(saved);
     }
 
-    // ✅ Get by ID
+
+
+
+    //  Get by ID
     @Override
     public StudentDTO getStudentById(Long id) {
         StudentEntity student = studentRepository.findById(id)
@@ -48,7 +88,7 @@ public class StudentServiceImpl implements StudentService {
         return convertToDTO(student);
     }
 
-    // ✅ Get All
+    //  Get All
     @Override
     public List<StudentDTO> getAllStudents() {
         return studentRepository.findAll()
@@ -57,7 +97,7 @@ public class StudentServiceImpl implements StudentService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ Delete
+    //  Delete
     @Override
     public void deleteStudent(Long id) {
         if (!studentRepository.existsById(id)) {
@@ -66,7 +106,7 @@ public class StudentServiceImpl implements StudentService {
         studentRepository.deleteById(id);
     }
 
-    // ✅ Assign Subjects
+    //  Assign Subjects
     @Override
     public StudentDTO assignSubjects(Long studentId, List<Long> subjectIds) {
         StudentEntity student = studentRepository.findById(studentId)
@@ -76,7 +116,7 @@ public class StudentServiceImpl implements StudentService {
         return convertToDTO(studentRepository.save(student));
     }
 
-    // ✅ Assign Professors
+    //  Assign Professors
     @Override
     public StudentDTO assignProfessors(Long studentId, List<Long> professorIds) {
         StudentEntity student = studentRepository.findById(studentId)
@@ -86,7 +126,7 @@ public class StudentServiceImpl implements StudentService {
         return convertToDTO(studentRepository.save(student));
     }
 
-    // 🔄 Entity → DTO
+    //  Entity → DTO
     private StudentDTO convertToDTO(StudentEntity entity) {
         StudentDTO dto = modelMapper.map(entity, StudentDTO.class);
         if (entity.getSubjects() != null) {
@@ -102,6 +142,12 @@ public class StudentServiceImpl implements StudentService {
         if (entity.getAdmissionRecord() != null) {
             dto.setAdmissionRecordId(entity.getAdmissionRecord().getId());
         }
+            if (entity.getDepartmentId() != null) {
+                DepartmentResponse response = departmentClient.getDepartmentById(entity.getDepartmentId());
+                if (response != null) {
+                    dto.setDepartment(response.getData());
+                }
+            }
         return dto;
     }
 }

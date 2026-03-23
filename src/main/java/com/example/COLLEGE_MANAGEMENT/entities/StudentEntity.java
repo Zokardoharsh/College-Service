@@ -34,5 +34,8 @@ public class StudentEntity {
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private AdmissionRecordEntity admissionRecord;
 
+    @Column(name = "department_id")
+    private Long departmentId;
+
 
 }

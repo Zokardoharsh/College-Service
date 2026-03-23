@@ -29,7 +29,7 @@ public class SubjectServiceImpl implements SubjectService {
         this.modelMapper = modelMapper;
     }
 
-    // ✅ Create Subject
+    //  Create Subject
     @Override
     public SubjectDTO createSubject(SubjectDTO dto) {
         SubjectEntity subject = modelMapper.map(dto, SubjectEntity.class);
@@ -37,7 +37,7 @@ public class SubjectServiceImpl implements SubjectService {
         return convertToDTO(saved);
     }
 
-    // ✅ Get by ID
+    //  Get by ID
     @Override
     public SubjectDTO getSubjectById(Long id) {
         SubjectEntity subject = subjectRepository.findById(id)
@@ -45,7 +45,7 @@ public class SubjectServiceImpl implements SubjectService {
         return convertToDTO(subject);
     }
 
-    // ✅ Get All
+    //  Get All
     @Override
     public List<SubjectDTO> getAllSubjects() {
         return subjectRepository.findAll()
@@ -54,7 +54,7 @@ public class SubjectServiceImpl implements SubjectService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ Delete
+    //  Delete
     @Override
     public void deleteSubject(Long id) {
         if (!subjectRepository.existsById(id)) {
@@ -63,7 +63,7 @@ public class SubjectServiceImpl implements SubjectService {
         subjectRepository.deleteById(id);
     }
 
-    // ✅ Assign Professor (Many-to-One)
+    //  Assign Professor (Many-to-One)
     @Override
     public SubjectDTO assignProfessor(Long subjectId, Long professorId) {
         SubjectEntity subject = subjectRepository.findById(subjectId)
@@ -74,7 +74,7 @@ public class SubjectServiceImpl implements SubjectService {
         return convertToDTO(subjectRepository.save(subject));
     }
 
-    // ✅ Assign Students (Many-to-Many)
+    //  Assign Students (Many-to-Many)
     @Override
     public SubjectDTO assignStudents(Long subjectId, List<Long> studentIds) {
         SubjectEntity subject = subjectRepository.findById(subjectId)
@@ -84,7 +84,7 @@ public class SubjectServiceImpl implements SubjectService {
         return convertToDTO(subjectRepository.save(subject));
     }
 
-    // 🔄 Entity → DTO
+    //  Entity → DTO
     private SubjectDTO convertToDTO(SubjectEntity entity) {
         SubjectDTO dto = modelMapper.map(entity, SubjectDTO.class);
 

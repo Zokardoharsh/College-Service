@@ -28,7 +28,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         this.modelMapper = modelMapper;
     }
 
-    // ✅ Create
+    //  Create
     @Override
     public ProfessorDTO createProfessor(ProfessorDTO dto) {
         ProfessorEntity professor = modelMapper.map(dto, ProfessorEntity.class);
@@ -36,7 +36,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         return convertToDTO(saved);
     }
 
-    // ✅ Get by ID
+    //  Get by ID
     @Override
     public ProfessorDTO getProfessorById(Long id) {
         ProfessorEntity professor = professorRepository.findById(id)
@@ -44,7 +44,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         return convertToDTO(professor);
     }
 
-    // ✅ Get All
+    //  Get All
     @Override
     public List<ProfessorDTO> getAllProfessors() {
         return professorRepository.findAll()
@@ -53,7 +53,7 @@ public class ProfessorServiceImpl implements ProfessorService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ Delete
+    //  Delete
     @Override
     public void deleteProfessor(Long id) {
         if (!professorRepository.existsById(id)) {
@@ -62,7 +62,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         professorRepository.deleteById(id);
     }
 
-    // ✅ Assign Subjects (One-to-Many side)
+    //  Assign Subjects (One-to-Many side)
     @Override
     public ProfessorDTO assignSubjects(Long professorId, List<Long> subjectIds) {
 
@@ -81,7 +81,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         return convertToDTO(professorRepository.findById(professorId).get());
     }
 
-    // ✅ Assign Students (Many-to-Many)
+    //  Assign Students (Many-to-Many)
     @Override
     public ProfessorDTO assignStudents(Long professorId, List<Long> studentIds) {
 
@@ -95,7 +95,7 @@ public class ProfessorServiceImpl implements ProfessorService {
         return convertToDTO(professorRepository.save(professor));
     }
 
-    // 🔄 Entity → DTO
+    //  Entity → DTO
     private ProfessorDTO convertToDTO(ProfessorEntity entity) {
         ProfessorDTO dto = modelMapper.map(entity, ProfessorDTO.class);
 

@@ -18,7 +18,7 @@ public class StudentController {
     }
 
     //  Create Student
-    @PostMapping
+    @PostMapping(path = "/CreateStudents")
     public StudentDTO createStudent(@Valid @RequestBody StudentDTO studentDTO) {
         return studentService.createStudent(studentDTO);
     }

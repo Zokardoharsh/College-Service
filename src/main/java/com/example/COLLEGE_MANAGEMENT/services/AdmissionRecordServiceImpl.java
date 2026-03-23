@@ -25,7 +25,7 @@ public class AdmissionRecordServiceImpl implements AdmissionRecordService {
         this.modelMapper = modelMapper;
     }
 
-    // ✅ Create
+    //  Create
     @Override
     public AdmissionRecordDTO createAdmissionRecord(AdmissionRecordDTO dto) {
         AdmissionRecordEntity record = modelMapper.map(dto, AdmissionRecordEntity.class);
@@ -33,7 +33,7 @@ public class AdmissionRecordServiceImpl implements AdmissionRecordService {
         return convertToDTO(saved);
     }
 
-    // ✅ Get by ID
+    //  Get by ID
     @Override
     public AdmissionRecordDTO getAdmissionRecordById(Long id) {
         AdmissionRecordEntity record = admissionRecordRepository.findById(id)
@@ -41,7 +41,7 @@ public class AdmissionRecordServiceImpl implements AdmissionRecordService {
         return convertToDTO(record);
     }
 
-    // ✅ Get All
+    //  Get All
     @Override
     public List<AdmissionRecordDTO> getAllAdmissionRecords() {
         return admissionRecordRepository.findAll()
@@ -50,7 +50,7 @@ public class AdmissionRecordServiceImpl implements AdmissionRecordService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ Delete
+    //  Delete
     @Override
     public void deleteAdmissionRecord(Long id) {
         if (!admissionRecordRepository.existsById(id)) {
@@ -59,7 +59,7 @@ public class AdmissionRecordServiceImpl implements AdmissionRecordService {
         admissionRecordRepository.deleteById(id);
     }
 
-    // ✅ Assign Student (One-to-One)
+    //  Assign Student (One-to-One)
     @Override
     public AdmissionRecordDTO assignStudent(Long admissionRecordId, Long studentId) {
 
@@ -74,7 +74,7 @@ public class AdmissionRecordServiceImpl implements AdmissionRecordService {
         return convertToDTO(admissionRecordRepository.save(record));
     }
 
-    // 🔄 Entity → DTO
+    //  Entity → DTO
     private AdmissionRecordDTO convertToDTO(AdmissionRecordEntity entity) {
         AdmissionRecordDTO dto = modelMapper.map(entity, AdmissionRecordDTO.class);
 

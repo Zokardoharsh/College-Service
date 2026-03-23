@@ -19,5 +19,8 @@ public class StudentDTO {
 
     private Long admissionRecordId;
 
+    private Long departmentId;
+    private DepartmentDTO department;
+
     // getters and setters
 }
